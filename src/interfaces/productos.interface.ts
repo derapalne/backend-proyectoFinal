@@ -5,5 +5,5 @@ export interface IProducto {
     categoria: string;
     precio: number;
     thumbnail: string;
-    timestamp: number;
+    timestamp?: number;
 }

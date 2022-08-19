@@ -4,21 +4,26 @@ import { ProductosService } from "../services";
 const service = new ProductosService();
 
 export class ProductosController {
-    getById(req: Request, res: Response) {
-        const id = req.params.id;
-        res.json(service.getById(id));
+    async getAll(req: Request, res: Response) {
+        const productos = await service.getAll();
+        res.render("productosList", { productos: productos });
     }
-    add(req: Request, res: Response) {
-        const data = req.body;
-        res.json(service.add(data));
-    }
-    updateById(req: Request, res: Response) {
+    async getById(req: Request, res: Response) {
         const id = req.params.id;
-        const data = req.body;
-        res.json(service.updateById(id, data));
+        if (isNaN(Number(id))) res.json(await service.getByCategory(id));
+        else res.json(await service.getById(id));
     }
-    deleteById(req: Request, res: Response) {
+    async add(req: Request, res: Response) {
+        const data = req.body.producto;
+        res.json(await service.add(data));
+    }
+    async updateById(req: Request, res: Response) {
         const id = req.params.id;
-        res.json(service.deleteById(id));
+        const data = req.body.producto;
+        res.json(await service.updateById(id, data));
+    }
+    async deleteById(req: Request, res: Response) {
+        const id = req.params.id;
+        res.json(await service.deleteById(id));
     }
 }

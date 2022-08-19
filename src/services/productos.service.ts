@@ -1,24 +1,29 @@
 import { ProductosDao } from "../daos";
 import { ProductoDto } from "../dtos";
 
-const dao = new ProductosDao();
+const dao = new ProductosDao("mongodb://127.0.0.1:27017/pfinal_db");
 
 export class ProductosService {
-    getById(id: string) {
-        return dao.getById(id);
+    async getById(id: string) {
+        return await dao.getById(id);
     }
-    getAll() {
-        return dao.getAll();
+    async getByCategory(category: string) {
+        return await dao.getByCategory(category);
     }
-    add(data: any) {
+    async getAll() {
+        return await dao.getAll();
+    }
+    async add(data: any) {
+        // console.log("Data desde el service: ", data);
+        data.timestamp = Date.now();
         const producto = new ProductoDto(data);
-        return dao.add(producto);
+        return await dao.add(producto);
     }
-    updateById(id: string, data: any) {
+    async updateById(id: string, data: any) {
         const producto = new ProductoDto(data);
-        return dao.updateById(id, producto);
+        return await dao.updateById(id, producto);
     }
-    deleteById(id: string) {
-        return dao.deleteById(id);
+    async deleteById(id: string) {
+        return await dao.deleteById(id);
     }
 }

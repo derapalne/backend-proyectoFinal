@@ -11,7 +11,8 @@ export class CarritosDao {
     async getByEmail(email: string) {
         try {
             await mongoose.connect(this.uri);
-            return await CarritoModel.findOne({ email: email }, { _id: 0, __v: 0 });
+            const carrito = await CarritoModel.findOne({ email: email }, { _id: 0, __v: 0 });
+            return new CarritoDto(carrito);
         } catch (e) {
             return e;
         }
@@ -24,6 +25,7 @@ export class CarritosDao {
             return e;
         }
     }
+
     async add(carrito: CarritoDto) {
         try {
             await mongoose.connect(this.uri);
@@ -34,12 +36,24 @@ export class CarritosDao {
         }
     }
 
-    async addProductoByEmail(email: string, producto: ProductoDto) {
+    // async addProductoByEmail(email: string, producto: ProductoDto) {
+    //     try {
+    //         await mongoose.connect(this.uri);
+    //         const carrito = await CarritoModel.findOne({ email: email });
+    //         carrito.productos.push(producto);
+    //         return await CarritoModel.findOneAndReplace({ email: email }, carrito);
+    //     } catch (e) {
+    //         return e;
+    //     }
+    // }
+
+    async updateByEmail(email: string, carritoDto: CarritoDto) {
         try {
             await mongoose.connect(this.uri);
-            const carrito = await CarritoModel.findOne({email: email});
-            carrito.productos.push(producto);
-            return await CarritoModel.findOneAndReplace({email: email}, carrito);
+            return await CarritoModel.findOneAndUpdate(
+                { email: email },
+                { $set: { productos: carritoDto.productos } }
+            );
         } catch (e) {
             return e;
         }

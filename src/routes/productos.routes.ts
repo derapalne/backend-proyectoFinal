@@ -4,7 +4,9 @@ import { ProductosController } from "../controllers";
 const productosRouter = Router();
 const controller = new ProductosController();
 
-// GET BY ID
+// GET ALL
+productosRouter.get("/", controller.getAll);
+// GET BY ID O CATEGORIA
 productosRouter.get("/:id", controller.getById);
 // POST PROD
 productosRouter.post("/", controller.add);

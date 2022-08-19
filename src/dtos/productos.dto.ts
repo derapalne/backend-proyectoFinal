@@ -7,11 +7,11 @@ export class ProductoDto {
     thumbnail: string;
     timestamp: number;
     constructor(data: any) {
-        console.log("Data desde el dto PRODUCTOS: ", data);
+        // console.log("Data desde el dto PRODUCTOS: ", data);
         this.id = data.id;
         this.nombre = data.nombre;
         this.descripcion = data.descripcion;
-        this.categoria = data.codigo;
+        this.categoria = data.categoria;
         this.precio = data.precio;
         this.thumbnail = data.thumbnail;
         this.timestamp = data.timestamp;
