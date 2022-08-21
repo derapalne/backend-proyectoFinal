@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <%- include("partials/header", {title: "Registrarse"}) %>
+</head>
+
+<body>
+  <div class="bigDiv">
+    <h2>Registrarse</h2>
+    <form action="/register" method="post">
+      <table class="centeredTable">
+        <tr>
+          <td>Nombre:</td>
+          <td><input type="text" placeholder="Nombre" name="nombre" id="inputNombre" required /></td>
+        </tr>
+        <tr>
+          <td>Apellido:</td>
+          <td><input type="text" placeholder="Apellido" name="apellido" id="inputApellido" required /></td>
+        </tr>
+        <tr>
+          <td>Email:</td>
+          <td><input type="text" placeholder="Email" name="email" id="inputEmail" required /></td>
+        </tr>
+        <tr>
+          <td>Dirección:</td>
+          <td><input type="text" placeholder="Direccion" name="direccion" id="inputDireccion" required /></td>
+        </tr>
+        <tr>
+          <td>Teléfono:</td>
+          <td><input type="text" placeholder="Teléfono" name="telefono" id="inputTelefono" required /></td>
+        </tr>
+        <tr>
+          <td>Contraseña:</td>
+          <td><input type="password" placeholder="Contraseña" name="password" id="inputPassword1" required /></td>
+        </tr>
+        <tr>
+          <td>De nuevo:</td>
+          <td><input type="password" placeholder="Contraseña" name="password2" id="inputPassword2" required /></td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <small id="passwordText"></small>
+            </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="submit" value="Registrarse" id="submitBtn"/>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <p><%= msg %></p>
+          </td>
+        </tr>
+      </table>
+      <span>---------------------------</span>
+    </form>
+  </div>
+  <script src="/js/register.js"></script>
+</body>
+
+</html>

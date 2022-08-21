@@ -10,8 +10,13 @@ export class ProductosController {
     }
     async getById(req: Request, res: Response) {
         const id = req.params.id;
-        if (isNaN(Number(id))) res.json(await service.getByCategory(id));
-        else res.json(await service.getById(id));
+        let respuesta = [];
+        if (isNaN(Number(id))) {
+            respuesta = await service.getByCategory(id);
+        } else {
+            respuesta[0] = await service.getById(id);
+        }
+        res.render("productosList", {productos: respuesta});
     }
     async add(req: Request, res: Response) {
         const data = req.body.producto;

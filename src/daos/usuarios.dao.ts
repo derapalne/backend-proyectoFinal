@@ -21,6 +21,15 @@ export class UsuariosDao {
             return e;
         }
     }
+
+    async getByPayload(payload: any) {
+        try {
+            await mongoose.connect(this.uri);
+            return await UsuarioModel.findOne({id: payload.sub}, {_id: 0, __v:0});
+        } catch (e) {
+            return e;
+        }
+    }
     async getAll() {
         try {
             await mongoose.connect(this.uri);

@@ -21,10 +21,10 @@ export class ProductosDao {
             return e;
         }
     }
-    async getByCategory(category: string) {
+    async getByCategory(categoria: string) {
         try {
             await mongoose.connect(this.uri);
-            return await ProductoModel.findOne({category: category}, {_id: 0, __v:0});
+            return await ProductoModel.find({categoria: categoria}, {_id: 0, __v:0});
         } catch (e) {
             return e;
         }

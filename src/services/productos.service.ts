@@ -7,8 +7,8 @@ export class ProductosService {
     async getById(id: string) {
         return await dao.getById(id);
     }
-    async getByCategory(category: string) {
-        return await dao.getByCategory(category);
+    async getByCategory(categoria: string) {
+        return await dao.getByCategory(categoria);
     }
     async getAll() {
         return await dao.getAll();

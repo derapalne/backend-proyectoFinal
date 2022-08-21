@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <%- include("partials/header", {title: "Ingresar"}) %>
+</head>
+
+<body>
+  <div class="bigDiv">
+    <h2>Ingresar</h2>
+    <form action="/login" method="post">
+      <table class="centeredTable">
+        <tr>
+          <td>Email:</td>
+          <td><input type="text" placeholder="Email" name="email" id="inputEmail" required /></td>
+        </tr>
+        <tr>
+          <td>Contraseña:</td>
+          <td><input type="password" placeholder="Contraseña" name="password" id="inputPassword" required /></td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <small><%= msg %></small>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+            <input type="submit" value="Registrarse" id="submitBtn" />
+          </td>
+        </tr>
+      </table>
+      <span>---------------------------</span>
+    </form>
+  </div>
+</body>
+
+</html>

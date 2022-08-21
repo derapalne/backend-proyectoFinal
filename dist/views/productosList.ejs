@@ -12,6 +12,11 @@
     <table class="centeredTable">
       <% for( let i = 0; i < productos.length; i++ ) { %>
       <tr>
+        <td colspan="2">
+          <span>--------------------------------------------------</span>
+        </td>
+      </tr>
+      <tr>
         <td><%=productos[i].nombre%></td>
         <td rowspan="2"><img src=<%=productos[i].thumbnail%>></td>
         <td><%=productos[i].id%></td>
@@ -20,13 +25,14 @@
         <td><%=productos[i].descripcion%></td>
         <td><%=productos[i].categoria%></td>
       </tr>
+      <% } %>
       <tr>
-        <td>
+        <td colspan="2">
           <span>--------------------------------------------------</span>
         </td>
       </tr>
-      <% } %>
     </table>
+
   </div>
 </body>
 
