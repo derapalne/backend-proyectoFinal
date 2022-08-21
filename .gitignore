@@ -1,2 +1,12 @@
 node_modules
-dist
+dist/controllers
+dist/daos
+dist/dtos
+dist/interfaces
+dist/models
+dist/routes
+dist/services
+dist/server.js
+backPlant.psd
+
+
