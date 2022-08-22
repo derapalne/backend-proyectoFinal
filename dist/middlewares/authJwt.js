@@ -30,7 +30,7 @@ passport_1.default.deserializeUser((email, done) => __awaiter(void 0, void 0, vo
     done(null, usuario);
 }));
 passport_1.default.use(new passport_jwt_1.Strategy(opts, (jwt_payload, done) => __awaiter(void 0, void 0, void 0, function* () {
-    const existe = yield dao.getByPayload(jwt_payload);
+    const existe = yield dao.getByPayload(jwt_payload.sub);
     if (existe) {
         return done(null, existe);
     }

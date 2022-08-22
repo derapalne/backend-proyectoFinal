@@ -21,7 +21,7 @@ passport.deserializeUser(async (email: string, done) => {
 
 passport.use(
     new JwtStrategy(opts, async (jwt_payload, done) => {
-        const existe = await dao.getByPayload(jwt_payload);
+        const existe = await dao.getByPayload(jwt_payload.sub);
         if (existe) {
             return done(null, existe);
         } else {

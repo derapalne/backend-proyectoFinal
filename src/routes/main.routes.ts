@@ -8,17 +8,14 @@ const controller = new MainController();
 const mainRouter = Router();
 
 mainRouter.get("/", isAuth, controller.getMain);
-mainRouter.get("/register", controller.registerGet);
-mainRouter.post(
-    "/register",
-    passport.authenticate("jwt", { successRedirect: "/", failureRedirect: "/register" }),
-    controller.registerPost
-);
-mainRouter.get("/login", controller.loginGet);
+mainRouter.get("/register", controller.getRegister);
+mainRouter.post("/register", controller.postRegister);
+mainRouter.get("/login", controller.getLogin);
 mainRouter.post(
     "/login",
     passport.authenticate("jwt", { successRedirect: "/", failureRedirect: "/login" }),
-    controller.loginPost
+    controller.postLogin
 );
+mainRouter.get("/chat", controller.getChat);
 
 export { mainRouter };

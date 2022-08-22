@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <%- include("partials/header", {title: "Chat"}) %>
+  <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+  <div class="bigDiv">
+    <h1>Chat</h1>
+    <div class="chat">
+      <table id="chat">
+        <% mensajes.forEach(mensaje => { %>
+          <tr>
+            <td colspan="1" style="text-align: left;">
+              <%=mensaje.email%>
+            </td>
+            <td colspan="1" style="text-align: left;">
+              <%=mensaje.fyh%> ::
+            </td>
+            <td colspan="3" style="text-align: left;">
+              <%=mensaje.cuerpo%>
+            </td>
+          </tr>
+          <% }) %>
+      </table>
+    </div>
+    <div>
+      <input type="text" name="cuerpo" id="cuerpoMensaje" />
+      <input type="hidden" id="email" value=<%=email%> />
+      <button id="enviarMensaje">Enviar</button>
+    </div>
+  </div>
+  <script src="js/chat.js"></script>
+</body>
+
+</html>

@@ -1,10 +1,11 @@
 import { Request, Response } from "express";
-import { UsuariosService } from "../services";
+import { MensajesService, UsuariosService } from "../services";
 import { comparePassword } from "../middlewares/authJwt";
 import jwt from "jsonwebtoken";
 import { UsuarioDto } from "../dtos";
 
 const service = new UsuariosService();
+const mensajesService = new MensajesService();
 
 const createToken = (usuario: UsuarioDto) => {
     return jwt.sign(
@@ -21,11 +22,11 @@ export class MainController {
         res.redirect("/productos");
     }
 
-    async registerGet(req: Request, res: Response) {
+    async getRegister(req: Request, res: Response) {
         res.render("register", { msg: "" });
     }
 
-    async registerPost(req: Request, res: Response) {
+    async postRegister(req: Request, res: Response) {
         console.log("RegisterPost");
         const usuarioExistente = await service.getByEmail(req.body.email);
         console.log(req.body);
@@ -38,11 +39,11 @@ export class MainController {
         }
     }
 
-    async loginGet(req: Request, res: Response) {
+    async getLogin(req: Request, res: Response) {
         res.render("login", { msg: "" });
     }
 
-    async loginPost(req: Request, res: Response) {
+    async postLogin(req: Request, res: Response) {
         if (!req.body.email || !req.body.password) {
             res.status(400).render("login", { msg: "Por favor envíe los datos necesarios" });
         }
@@ -53,5 +54,9 @@ export class MainController {
             const coincide = await comparePassword(req.body.password, usuarioExistente.password);
             if (coincide) res.status(200).redirect("/");
         }
+    }
+
+    async getChat(req: Request, res: Response) {
+        res.render("chat", {mensajes: await mensajesService.getAll(), email: "req.user.email"});
     }
 }
