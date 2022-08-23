@@ -7,7 +7,7 @@ const UsuariosSchema = new Schema<IUsuario>({
     telefono: {type: String, required: true},
     direccion: {type: String, required: true},
     email: {type: String, required: true},
-    password: {type: String, required: true, maxlength: 70},
+    password: {type: String, required: true},
 });
 
 const UsuarioModel = model<IUsuario>("Usuario", UsuariosSchema);

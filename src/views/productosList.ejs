@@ -19,7 +19,13 @@
       <tr>
         <td><%=productos[i].nombre%></td>
         <td rowspan="2"><img src=<%=productos[i].thumbnail%>></td>
-        <td><%=productos[i].id%></td>
+        <td>
+          <form action="/api/carritos/" method="post">
+            <input type="hidden" name="email" value="<%=user.email%>" />
+            <input type="hidden" name="idProd" value="<%=productos[i].id%>" />
+            <input type="submit" value="Agregar al carrito" />
+          </form>
+        </td>
       </tr>
       <tr>
         <td><%=productos[i].descripcion%></td>

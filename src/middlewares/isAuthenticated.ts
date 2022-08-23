@@ -2,9 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
 
 export const isAuth = (req: Request, res: Response, next: NextFunction) => {
-    console.log("autenticando...");
     if (req.isAuthenticated()) {
-        console.log("AUTENTICADO");
         return next();
     } else {
         res.status(403).redirect("/login");

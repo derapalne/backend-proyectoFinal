@@ -2,6 +2,7 @@ import { Router } from "express";
 import passport from "passport";
 import { MainController } from "../controllers";
 import { isAuth } from "../middlewares";
+import "../middlewares/authLocal";
 
 const controller = new MainController();
 
@@ -24,10 +25,14 @@ mainRouter.get("/login-error", controller.getLoginError);
 mainRouter.post(
     "/login",
     passport.authenticate("local-login", {
-        successRedirect: "/",
+        // successRedirect: "/",
         failureRedirect: "/login-error",
         passReqToCallback: true,
-    })
+    }),
+    (req, res) => {
+        // console.log("req desde post login",req.user);
+        res.redirect("/");
+    }
 );
 mainRouter.get("/chat", controller.getChat);
 

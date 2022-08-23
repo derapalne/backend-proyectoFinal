@@ -5,14 +5,15 @@ const service = new CarritosService();
 
 export class CarritosController {
     async getByEmail(req: Request, res: Response) {
-        const email = "req.user.email";
+        const email = req.body.user;
         const response = await service.getByEmail(email);
         if(response) res.json(response);
         else res.json(await service.add(email));
     }
     async postProducto(req: Request, res: Response) {
         const idProd = req.body.idProd;
-        const email = "req.user.email";
+        const email = req.body.email;
+
         res.json(await service.addProd(email, idProd));
     }
     async removeProducto(req: Request, res: Response) {

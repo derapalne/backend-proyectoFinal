@@ -5,8 +5,9 @@ const service = new ProductosService();
 
 export class ProductosController {
     async getAll(req: Request, res: Response) {
+        const user = req.user;
         const productos = await service.getAll();
-        res.render("productosList", { productos: productos });
+        res.render("productosList", { productos: productos, user: req.user });
     }
     async getById(req: Request, res: Response) {
         const id = req.params.id;

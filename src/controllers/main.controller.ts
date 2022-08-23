@@ -15,6 +15,7 @@ const createToken = (usuario: UsuarioDto) => {
 
 export class MainController {
     async getMain(req: Request, res: Response) {
+        console.log("req desde main /", req.user);
         res.redirect("/api/productos");
     }
 
@@ -47,7 +48,6 @@ export class MainController {
         res.render("login", { msg: "Error de credenciales!" });
     }
 
-
     async postLogin(req: Request, res: Response) {
         if (!req.body.email || !req.body.password) {
             res.status(400).render("login", { msg: "Por favor envíe los datos necesarios" });
@@ -59,7 +59,7 @@ export class MainController {
             const coincide = await comparePassword(req.body.password, usuarioExistente.password);
             if (coincide) {
                 const token = createToken(usuarioExistente);
-                res.cookie("userInfo", {user: usuarioExistente, token: token});
+                res.cookie("userInfo", { user: usuarioExistente, token: token });
                 res.status(200).redirect("/");
             }
         }
