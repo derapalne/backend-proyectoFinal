@@ -40,12 +40,10 @@ export class MainController {
     }
 
     async getLogin(req: Request, res: Response) {
-        console.log(req.header("authorization"));
         res.render("login", { msg: "" });
     }
 
     async getLoginError(req: Request, res: Response) {
-        console.log(req.header("authorization"));
         res.render("login", { msg: "Error de credenciales!" });
     }
 
