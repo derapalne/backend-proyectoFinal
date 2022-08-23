@@ -1,7 +1,8 @@
 import { UsuariosDao } from "../daos";
 import { UsuarioDto } from "../dtos";
+import { config } from "../utils";
 
-const dao = new UsuariosDao("mongodb://127.0.0.1:27017/pfinal_db");
+const dao = new UsuariosDao(config.mongoUri);
 
 export class UsuariosService {
     async getByEmail(email: string): Promise<UsuarioDto | null> {

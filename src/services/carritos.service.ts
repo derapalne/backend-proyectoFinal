@@ -1,8 +1,9 @@
 import { CarritosDao, ProductosDao } from "../daos";
 import { CarritoDto, ProductoDto } from "../dtos";
+import { config } from "../utils";
 
-const dao = new CarritosDao("mongodb://127.0.0.1:27017/pfinal_db");
-const prodDao = new ProductosDao("mongodb://127.0.0.1:27017/pfinal_db");
+const dao = new CarritosDao(config.mongoUri);
+const prodDao = new ProductosDao(config.mongoUri);
 
 export class CarritosService {
     async add(email: string) {

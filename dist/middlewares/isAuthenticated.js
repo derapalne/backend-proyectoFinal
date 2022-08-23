@@ -8,16 +8,18 @@ const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const isAuth = (req, res, next) => {
     console.log("autenticando...");
     if (req.isAuthenticated()) {
-        console.log("NO AUTENTICADO");
+        console.log("AUTENTICADO");
         return next();
     }
-    const authHeader = req.headers.authorization;
-    if (!authHeader) {
+    // console.log(req.cookies);
+    const authToken = req.cookies.userInfo.token;
+    if (!authToken) {
         return res.status(401).json({
             error: "not authenticated",
         });
     }
-    const token = authHeader.split(" ")[1];
+    const token = authToken.split(".")[1];
+    console.log(token);
     jsonwebtoken_1.default.verify(token, "azurill", (err, decoded) => {
         if (err) {
             return res.status(403).json({

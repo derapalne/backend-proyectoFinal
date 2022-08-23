@@ -1,7 +1,8 @@
 import { ProductosDao } from "../daos";
 import { ProductoDto } from "../dtos";
+import { config } from "../utils";
 
-const dao = new ProductosDao("mongodb://127.0.0.1:27017/pfinal_db");
+const dao = new ProductosDao(config.mongoUri);
 
 export class ProductosService {
     async getById(id: string) {

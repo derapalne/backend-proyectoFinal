@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { MensajesService, UsuariosService } from "../services";
-import { comparePassword } from "../middlewares/authJwt";
+import { comparePassword } from "../middlewares/authLocal";
 import jwt from "jsonwebtoken";
 import { UsuarioDto } from "../dtos";
 
@@ -8,22 +8,22 @@ const service = new UsuariosService();
 const mensajesService = new MensajesService();
 
 const createToken = (usuario: UsuarioDto) => {
-    return jwt.sign(
-        { nombreCompleto: usuario.nombreCompleto, email: usuario.email },
-        "SecretoDesdeDotEnv",
-        {
-            expiresIn: 60,
-        }
-    );
+    return jwt.sign({ nombreCompleto: usuario.nombreCompleto, email: usuario.email }, "azurill", {
+        expiresIn: 60,
+    });
 };
 
 export class MainController {
     async getMain(req: Request, res: Response) {
-        res.redirect("/productos");
+        res.redirect("/api/productos");
     }
 
     async getRegister(req: Request, res: Response) {
         res.render("register", { msg: "" });
+    }
+
+    async getRegisterError(req: Request, res: Response) {
+        res.render("register", { msg: "No se ha podido registrar al usuario." });
     }
 
     async postRegister(req: Request, res: Response) {
@@ -40,8 +40,15 @@ export class MainController {
     }
 
     async getLogin(req: Request, res: Response) {
+        console.log(req.header("authorization"));
         res.render("login", { msg: "" });
     }
+
+    async getLoginError(req: Request, res: Response) {
+        console.log(req.header("authorization"));
+        res.render("login", { msg: "Error de credenciales!" });
+    }
+
 
     async postLogin(req: Request, res: Response) {
         if (!req.body.email || !req.body.password) {
@@ -52,11 +59,15 @@ export class MainController {
             res.status(400).render("login", { msg: "El usuario es inexistente" });
         } else {
             const coincide = await comparePassword(req.body.password, usuarioExistente.password);
-            if (coincide) res.status(200).redirect("/");
+            if (coincide) {
+                const token = createToken(usuarioExistente);
+                res.cookie("userInfo", {user: usuarioExistente, token: token});
+                res.status(200).redirect("/");
+            }
         }
     }
 
     async getChat(req: Request, res: Response) {
-        res.render("chat", {mensajes: await mensajesService.getAll(), email: "req.user.email"});
+        res.render("chat", { mensajes: await mensajesService.getAll(), email: "req.user.email" });
     }
 }

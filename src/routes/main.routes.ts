@@ -9,12 +9,25 @@ const mainRouter = Router();
 
 mainRouter.get("/", isAuth, controller.getMain);
 mainRouter.get("/register", controller.getRegister);
-mainRouter.post("/register", controller.postRegister);
+mainRouter.get("/register-error", controller.getRegisterError);
+mainRouter.post(
+    "/register",
+    passport.authenticate("local-register", {
+        successRedirect: "/",
+        failureRedirect: "/register-error",
+        passReqToCallback: true,
+    })
+);
+
 mainRouter.get("/login", controller.getLogin);
+mainRouter.get("/login-error", controller.getLoginError);
 mainRouter.post(
     "/login",
-    passport.authenticate("jwt", { successRedirect: "/", failureRedirect: "/login" }),
-    controller.postLogin
+    passport.authenticate("local-login", {
+        successRedirect: "/",
+        failureRedirect: "/login-error",
+        passReqToCallback: true,
+    })
 );
 mainRouter.get("/chat", controller.getChat);
 

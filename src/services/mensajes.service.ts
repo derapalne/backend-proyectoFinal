@@ -1,7 +1,8 @@
 import { MensajesDao } from "../daos";
 import { MensajeDto } from "../dtos";
+import { config } from "../utils";
 
-const dao = new MensajesDao("mongodb://127.0.0.1:27017/pfinal_db");
+const dao = new MensajesDao(config.mongoUri);
 
 export class MensajesService {
     async getAll() {
