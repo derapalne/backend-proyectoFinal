@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <%- include("partials/header", {title: "Error!"}) %> 
+</head>
+<body>
+    <div class="bigDiv">
+        <p>Hubo un error!!</p>
+        <div>
+            <pre>
+                <%= error %>
+            </pre>
+        </div>
+        <a href="/">Volver a la página principal</a>
+    </div>
+</body>
+</html>

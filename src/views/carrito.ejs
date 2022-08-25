@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <%- include("partials/header", {title: "Tu Carrito"}) %>
+</head>
+
+<body>
+  <div class="bigDiv">
+    <h1>Tu carrito</h1>
+    <a href="/api/productos">Volver a la lista de productos</a>
+    <table class="centeredTable">
+      <% if(carrito.productos.length == 0) { %>
+        <tr>
+          <td>No hay productos todavía! Andá y agregá alguno.</td>
+        </tr>
+      <% } else {  for( let i = 0; i < carrito.productos.length; i++ ) { %>
+      <tr>
+        <td colspan="2">
+          <span>--------------------------------------------------</span>
+        </td>
+      </tr>
+      <tr>
+        <td><%=carrito.productos[i].producto.nombre%></td>
+        <td rowspan="2"><img src=<%=carrito.productos[i].producto.thumbnail%>></td>
+        <td>
+          <form>
+            <input type="hidden" name="email" value=<%=carrito.email%> />
+            <input type="hidden" name="idProd" value=<%=carrito.productos[i].producto.id%> />
+            <input type="button" class="eliminar" value="Quitar del carrito" />
+          </form>
+        </td>
+      </tr>
+      <tr>
+        <td><%=carrito.productos[i].producto.descripcion%></td>
+        <td><%=carrito.productos[i].producto.categoria%></td>
+        <td>Cantidad: <%=carrito.productos[i].cantidad%></td>
+      </tr>
+      <% } %>
+      <% } %>
+      <tr>
+        <td colspan="2">
+          <span>--------------------------------------------------</span>
+        </td>
+      </tr>
+    </table>
+    <form action="/api/ordenar" method="post" class="centeredTable">
+      <input type="hidden" name="email" value=<%=carrito.email%> />
+      <input type="submit" value="Hacer compra">
+    </form>
+    <form action="/api/carritos" style="display: none;">
+      <input type="submit" id="recargar">
+    </form>
+    <script src="/js/carrito.js"></script>
+  </div>
+</body>
+
+</html>

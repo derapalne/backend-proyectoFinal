@@ -15,7 +15,6 @@ const createToken = (usuario: UsuarioDto) => {
 
 export class MainController {
     async getMain(req: Request, res: Response) {
-        console.log("req desde main /", req.user);
         res.redirect("/api/productos");
     }
 
@@ -65,7 +64,14 @@ export class MainController {
         }
     }
 
+    async postLogout(req: Request, res: Response) {
+        req.session.destroy((e) => {
+            res.render("error", {error: e});
+        });
+        res.render("logout");
+    }
+
     async getChat(req: Request, res: Response) {
-        res.render("chat", { mensajes: await mensajesService.getAll(), email: "req.user.email" });
+        res.render("chat", { mensajes: await mensajesService.getAll(), email: req.user.email });
     }
 }

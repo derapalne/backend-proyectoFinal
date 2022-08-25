@@ -69,7 +69,7 @@ passport.use(
             if (!passOk) {
                 return done(null, false);
             }
-            return done(null, usuario);
+            return done(null, usuario.email);
         }
     )
 );

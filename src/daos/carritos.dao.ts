@@ -12,7 +12,8 @@ export class CarritosDao {
         try {
             await mongoose.connect(this.uri);
             const carrito = await CarritoModel.findOne({ email: email }, { _id: 0, __v: 0 });
-            return new CarritoDto(carrito);
+            if(carrito) return new CarritoDto(carrito);
+            else return undefined;
         } catch (e) {
             return e;
         }
@@ -28,6 +29,7 @@ export class CarritosDao {
 
     async add(carrito: CarritoDto) {
         try {
+            console.log({carrito});
             await mongoose.connect(this.uri);
             const data = new CarritoModel(carrito);
             return await data.save();

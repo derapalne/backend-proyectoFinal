@@ -7,11 +7,13 @@ import MongoStore from "connect-mongo";
 import cookieParser from "cookie-parser";
 import compression from "compression";
 import path from "node:path";
-
-const PORT = 7777;
+import cors from "cors";
 
 import { productosRouter, carritosRouter, mainRouter } from "./routes";
 import { MensajesService } from "./services";
+import { corsOptions, config } from "./utils";
+
+const PORT = config.port;
 
 const app: Express = express();
 
@@ -22,11 +24,11 @@ const io = new IOServer(httpServer);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
-
+app.use(cors(corsOptions));
 app.use(
     session({
         store: MongoStore.create({
-            mongoUrl: "mongodb://127.0.0.1:27017/pfinal_db",
+            mongoUrl: config.mongoUri,
         }),
         secret: "bombonera",
         resave: false,

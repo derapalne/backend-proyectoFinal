@@ -7,7 +7,7 @@ export class ProductosController {
     async getAll(req: Request, res: Response) {
         const user = req.user;
         const productos = await service.getAll();
-        res.render("productosList", { productos: productos, user: req.user });
+        res.render("productosList", { productos: productos, user: user, categoria: false });
     }
     async getById(req: Request, res: Response) {
         const id = req.params.id;
@@ -17,7 +17,7 @@ export class ProductosController {
         } else {
             respuesta[0] = await service.getById(id);
         }
-        res.render("productosList", {productos: respuesta});
+        res.render("productosList", {productos: respuesta, user: req.user, categoria: req.params.id});
     }
     async add(req: Request, res: Response) {
         const data = req.body.producto;

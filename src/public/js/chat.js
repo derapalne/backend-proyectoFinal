@@ -14,7 +14,6 @@ cuerpoMensaje.addEventListener("keypress", (e) => {
 enviarMensaje.addEventListener("click", (e) => {
     e.preventDefault();
     if (cuerpoMensaje.value.trim() != "" && cuerpoMensaje.value != null) {
-        console.log(mensajes);
         const d = new Date();
         const nuevoMensaje = {
             email: email.value,

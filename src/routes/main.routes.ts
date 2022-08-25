@@ -34,6 +34,7 @@ mainRouter.post(
         res.redirect("/");
     }
 );
-mainRouter.get("/chat", controller.getChat);
+mainRouter.post("/logout",isAuth, controller.postLogout)
+mainRouter.get("/chat", isAuth, controller.getChat);
 
 export { mainRouter };

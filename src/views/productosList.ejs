@@ -9,6 +9,11 @@
 <body>
   <div class="bigDiv">
     <h1>Productos</h1>
+    <a href="/api/carritos">Ir al carrito</a> <br />
+    <a href="/chat">Ir al chat</a> <br />
+    <form action="/logout" method="post">
+      <input type="submit" value="Desloguearse" />
+    </form>
     <table class="centeredTable">
       <% for( let i = 0; i < productos.length; i++ ) { %>
       <tr>
@@ -21,14 +26,18 @@
         <td rowspan="2"><img src=<%=productos[i].thumbnail%>></td>
         <td>
           <form action="/api/carritos/" method="post">
-            <input type="hidden" name="email" value="<%=user.email%>" />
-            <input type="hidden" name="idProd" value="<%=productos[i].id%>" />
+            <input type="hidden" name="email" value=<%=user.email%> />
+            <input type="hidden" name="idProd" value=<%=productos[i].id%> />
+            <%if(categoria) {%>
+            <input type="hidden" name="categoria" value=<%=productos[i].categoria%> />
+            <%}%>
             <input type="submit" value="Agregar al carrito" />
           </form>
         </td>
       </tr>
       <tr>
-        <td><%=productos[i].descripcion%></td>
+        <td><%=productos[i].descripcion%>
+        </td>
         <td><%=productos[i].categoria%></td>
       </tr>
       <% } %>
