@@ -8,6 +8,9 @@ export class MensajesService {
     async getAll() {
         return await dao.getAll();
     }
+    async getByEmail(email: string) {
+        return await dao.getByEmail(email);
+    }
     async add(data: any) {
         return await dao.add(new MensajeDto(data));
     }

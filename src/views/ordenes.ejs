@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <%- include("partials/header", {title: "Tus Órdenes"}) %>
+</head>
+
+<body>
+  <div class="bigDiv">
+    <h1>Tus órdenes</h1>
+    <a href="/api/productos">Volver a la lista de productos</a> <br/>
+    <a href="/chat">Ir al chat</a> <br/>
+    <table class="centeredTable">
+      <% if (ordenes.length == 0) { %>
+      <tr>
+        <td>No hay órdnes todavía! Andá y hacé alguna.</td>
+      </tr>
+      <% } else {%>
+      <% for( let o = 0; o < ordenes.length; o++ ) { %>
+        <tr>
+          <td colspan="4">
+            <span>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+          </td>
+        </tr>
+      <tr>
+        <td>
+          <p>Orden ID: <%= ordenes[o].ordenId %></p>
+        </td>
+        <td>
+          <p>Estado: <%= ordenes[o].estado %></p>
+        </td>
+      </tr>
+      <% if(ordenes[o].productos.length == 0) { %>
+      <tr>
+        <td>No hay productos todavía! Andá y agregá alguno.</td>
+      </tr>
+      <% } else {  for( let i = 0; i < ordenes[o].productos.length; i++ ) { %>
+      <tr>
+        <td colspan="2">
+          <span>--------------------------------------------------</span>
+        </td>
+      </tr>
+      <tr>
+        <td><%=ordenes[o].productos[i].producto.nombre%></td>
+        <td rowspan="2"><img src=<%=ordenes[o].productos[i].producto.thumbnail%>></td>
+      </tr>
+      <tr>
+        <td><%=ordenes[o].productos[i].producto.descripcion%></td>
+        <td><%=ordenes[o].productos[i].producto.categoria%></td>
+        <td>Cantidad: <%=ordenes[o].productos[i].cantidad%></td>
+        <td>Valor: $<%=(ordenes[o].productos[i].producto.precio*ordenes[o].productos[i].cantidad).toLocaleString("ES")%></td>
+      </tr>
+      <% } %>
+      <% } %>
+      <% } %>
+      <% } %>
+
+      <tr>
+        <td colspan="2">
+          <span>--------------------------------------------------</span>
+        </td>
+      </tr>
+    </table>
+    <a href="/api/carritos" id="recargar"></a>
+    <script src="/js/carrito.js"></script>
+  </div>
+</body>
+
+</html>

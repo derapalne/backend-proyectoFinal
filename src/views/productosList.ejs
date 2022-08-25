@@ -10,6 +10,7 @@
   <div class="bigDiv">
     <h1>Productos</h1>
     <a href="/api/carritos">Ir al carrito</a> <br />
+    <a href="/api/ordenes">Ver órdenes</a> <br />
     <a href="/chat">Ir al chat</a> <br />
     <form action="/logout" method="post">
       <input type="submit" value="Desloguearse" />
@@ -36,8 +37,8 @@
         </td>
       </tr>
       <tr>
-        <td><%=productos[i].descripcion%>
-        </td>
+        <td><%=productos[i].descripcion%></td>
+        <td>$<%=productos[i].precio%></td>
         <td><%=productos[i].categoria%></td>
       </tr>
       <% } %>

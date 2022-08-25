@@ -36,6 +36,7 @@
         <td><%=carrito.productos[i].producto.descripcion%></td>
         <td><%=carrito.productos[i].producto.categoria%></td>
         <td>Cantidad: <%=carrito.productos[i].cantidad%></td>
+        <td>Valor: $<%=carrito.productos[i].producto.precio*carrito.productos[i].cantidad%></td>
       </tr>
       <% } %>
       <% } %>
@@ -45,13 +46,11 @@
         </td>
       </tr>
     </table>
-    <form action="/api/ordenar" method="post" class="centeredTable">
+    <form action="/api/ordenes" method="post" class="centeredTable">
       <input type="hidden" name="email" value=<%=carrito.email%> />
       <input type="submit" value="Hacer compra">
     </form>
-    <form action="/api/carritos" style="display: none;">
-      <input type="submit" id="recargar">
-    </form>
+    <a href="/api/carritos" id="recargar"></a>
     <script src="/js/carrito.js"></script>
   </div>
 </body>

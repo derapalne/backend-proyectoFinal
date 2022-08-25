@@ -35,6 +35,8 @@ mainRouter.post(
     }
 );
 mainRouter.post("/logout",isAuth, controller.postLogout)
-mainRouter.get("/chat", isAuth, controller.getChat);
+
+mainRouter.get("/chat/:email?", isAuth, controller.getChat);
+
 
 export { mainRouter };

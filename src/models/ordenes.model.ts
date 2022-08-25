@@ -1,7 +1,7 @@
 import { Schema, model } from "mongoose";
-import { ICarrito } from "../interfaces";
+import { IOrden } from "../interfaces";
 
-const CarritosSchema = new Schema<ICarrito>({
+const OrdenesSchema = new Schema<IOrden>({
     email: { type: String, required: true },
     productos: [
         {
@@ -17,9 +17,12 @@ const CarritosSchema = new Schema<ICarrito>({
             cantidad: { type: Number },
         },
     ],
-    timestamp: { type: String, required: true },
+    ordenId: { type: Number, required: true },
+    estado: { type: String, required: true },
+    fyh: { type: String, required: true },
 });
 
-const CarritoModel = model<ICarrito>("Carrito", CarritosSchema);
+// Se llama "Ordene" para que la colección figure como ordenes y no ordens :p
+const OrdenModel = model<IOrden>("Ordene", OrdenesSchema);
 
-export { CarritoModel, CarritosSchema };
+export { OrdenModel, OrdenesSchema };

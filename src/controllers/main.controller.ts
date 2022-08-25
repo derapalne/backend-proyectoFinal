@@ -66,12 +66,18 @@ export class MainController {
 
     async postLogout(req: Request, res: Response) {
         req.session.destroy((e) => {
-            res.render("error", {error: e});
+            if (e) res.render("error", { error: e });
         });
         res.render("logout");
     }
 
     async getChat(req: Request, res: Response) {
-        res.render("chat", { mensajes: await mensajesService.getAll(), email: req.user.email });
+        if (req.params.email)
+            res.render("chat", {
+                mensajes: await mensajesService.getByEmail(req.params.email),
+                email: req.user.email,
+            });
+        else
+            res.render("chat", { mensajes: await mensajesService.getAll(), email: req.user.email });
     }
 }
