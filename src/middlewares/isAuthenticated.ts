@@ -1,31 +1,31 @@
 import { NextFunction, Request, Response } from "express";
 import jwt from "jsonwebtoken";
+import { config } from "../utils";
 
 export const isAuth = (req: Request, res: Response, next: NextFunction) => {
-    if (req.isAuthenticated()) {
-        return next();
+    if (config.AUTH_MODE == "passport") {
+        if (req.isAuthenticated()) {
+            return next();
+        }
+    } else if (config.AUTH_MODE == "jwt") {
+        const userInfo = req.cookies.userInfo;
+        if (!userInfo) {
+            return res
+                .status(403)
+                .render("login", { msg: "No autorizado! Por favor logueate para continuar" });
+        }
+        const token = userInfo.token;
+
+        jwt.verify(token, config.secret, (err, decoded) => {
+            if (err) {
+                return res
+                    .status(403)
+                    .render("login", { msg: "No autorizado! Por favor logueate para continuar" });
+            }
+            req.user = (<any>decoded).data;
+            next();
+        });
     } else {
-        res.status(403).redirect("/login");
+        return res.status(500).render("error", {msg: "No se ha proporcionado un método de autenticacion. Por favor configure la variable de entorno"});
     }
-    // console.log(req.cookies);
-
-    // const authToken = req.cookies.userInfo.token;
-    // if (!authToken) {
-    //     return res.status(401).json({
-    //         error: "not authenticated",
-    //     });
-    // }
-    // const token = authToken.split(".")[1];
-    // console.log(token);
-
-    // jwt.verify(token, "azurill", (err, decoded) => {
-    //     if (err) {
-    //         return res.status(403).json({
-    //             error: "not authorized",
-    //         });
-    //     }
-    //     console.log("Dale papu segui nomas");
-    //     req.user = (<any>decoded).data;
-    //     next();
-    // });
 };

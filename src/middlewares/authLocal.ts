@@ -30,7 +30,6 @@ passport.use(
             if (existe) {
                 return done(null, false);
             }
-            console.log({ email, password });
             const usuarioData = {
                 nombre: req.body.nombre,
                 apellido: req.body.apellido,

@@ -6,25 +6,48 @@ const dao = new ProductosDao(config.mongoUri);
 
 export class ProductosService {
     async getById(id: string) {
-        return await dao.getById(id);
+        try {
+            return await dao.getById(id);
+        } catch (e) {
+            return e;
+        }
     }
     async getByCategory(categoria: string) {
-        return await dao.getByCategory(categoria);
+        try {
+            return await dao.getByCategory(categoria);
+        } catch (e) {
+            return e;
+        }
     }
     async getAll() {
-        return await dao.getAll();
+        try {
+            return await dao.getAll();
+        } catch (e) {
+            return e;
+        }
     }
     async add(data: any) {
-        // console.log("Data desde el service: ", data);
-        data.timestamp = Date.now();
-        const producto = new ProductoDto(data);
-        return await dao.add(producto);
+        try {
+            data.timestamp = Date.now();
+            const producto = new ProductoDto(data);
+            return await dao.add(producto);
+        } catch (e) {
+            return e;
+        }
     }
     async updateById(id: string, data: any) {
-        const producto = new ProductoDto(data);
-        return await dao.updateById(id, producto);
+        try {
+            const producto = new ProductoDto(data);
+            return await dao.updateById(id, producto);
+        } catch (e) {
+            return e;
+        }
     }
     async deleteById(id: string) {
-        return await dao.deleteById(id);
+        try {
+            return await dao.deleteById(id);
+        } catch (e) {
+            return e;
+        }
     }
 }

@@ -5,23 +5,34 @@ const service = new CarritosService();
 
 export class CarritosController {
     async getByEmail(req: Request, res: Response) {
-        const email = req.user.email;
-        let carrito = await service.getByEmail(email);
-        if (!carrito) {
-            carrito = await service.add(email);
+        try {
+            console.log(req.cookies.userInfo);
+            let email = "";
+            if(req.user) email = req.user.email ;
+            else email = req.cookies.userInfo.user.email;
+            let carrito = await service.getByEmail(email);
+            if (!carrito) {
+                carrito = await service.add(email);
+            }
+            res.render("carrito", { carrito: carrito });
+        } catch (e) {
+            res.status(500).render("error", { error: e });
         }
-        res.render("carrito", { carrito: carrito });
     }
     async postProducto(req: Request, res: Response) {
-        const idProd = req.body.idProd;
-        const email = req.body.email;
-        const carritoExiste = await service.getByEmail(email);
-        if (!carritoExiste) await service.add(email);
-        await service.addProd(email, idProd);
-        if (req.body.categoria) {
-            res.redirect("/api/productos/" + req.body.categoria);
-        } else {
-            res.redirect("/api/productos");
+        try {
+            const idProd = req.body.idProd;
+            const email = req.body.email;
+            const carritoExiste = await service.getByEmail(email);
+            if (!carritoExiste) await service.add(email);
+            await service.addProd(email, idProd);
+            if (req.body.categoria) {
+                res.redirect("/api/productos/" + req.body.categoria);
+            } else {
+                res.redirect("/api/productos");
+            }
+        } catch (e) {
+            res.status(500).render("error", { error: e });
         }
     }
     async removeProducto(req: Request, res: Response) {
@@ -31,9 +42,8 @@ export class CarritosController {
             const carrito = await service.removeProd(email, idProd);
             if (typeof carrito != "string") res.render("carrito", { carrito: carrito });
             else res.json(carrito);
-        } catch (error) {
-            // retornar pagina de error
+        } catch (e) {
+            res.status(500).render("error", { error: e });
         }
     }
-    async method(req: Request, res: Response) {}
 }

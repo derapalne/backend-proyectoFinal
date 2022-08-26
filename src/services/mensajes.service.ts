@@ -6,12 +6,24 @@ const dao = new MensajesDao(config.mongoUri);
 
 export class MensajesService {
     async getAll() {
-        return await dao.getAll();
+        try {
+            return await dao.getAll();
+        } catch (e) {
+            return e;
+        }
     }
     async getByEmail(email: string) {
-        return await dao.getByEmail(email);
+        try {
+            return await dao.getByEmail(email);
+        } catch (e) {
+            return e;
+        }
     }
     async add(data: any) {
-        return await dao.add(new MensajeDto(data));
+        try {
+            return await dao.add(new MensajeDto(data));
+        } catch (e) {
+            return e;
+        }
     }
 }

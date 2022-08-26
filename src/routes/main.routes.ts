@@ -25,14 +25,10 @@ mainRouter.get("/login-error", controller.getLoginError);
 mainRouter.post(
     "/login",
     passport.authenticate("local-login", {
-        // successRedirect: "/",
         failureRedirect: "/login-error",
         passReqToCallback: true,
     }),
-    (req, res) => {
-        // console.log("req desde post login",req.user);
-        res.redirect("/");
-    }
+    controller.postLogin
 );
 mainRouter.post("/logout",isAuth, controller.postLogout)
 
