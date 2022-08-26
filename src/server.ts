@@ -61,7 +61,6 @@ server.on("error", (error) => console.log("Error en el servidor: ", error));
 const mensajesService = new MensajesService();
 
 io.on("connection", async (socket) => {
-    console.log(`Nuevo cliente conectado: ${socket.id.slice(0, 4)}`);
     socket.on("mensajeEnviado", async (mensaje) => {
         await mensajesService.add(mensaje);
         io.sockets.emit("chatRefresh", mensaje);

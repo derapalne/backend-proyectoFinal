@@ -39,10 +39,8 @@ passport.use(
                 password: "",
             };
             usuarioData.password = await bcrypt.hash(password, 10);
-            console.log({ usuarioData });
             const usuarioDto = new UsuarioDto(usuarioData);
             const usuario = await dao.add(usuarioDto);
-            // console.log({ usuario });
             // ENVIAR MAIL DE CONFIRMACION
             console.log({usuario});
             return done(null, usuario);
@@ -59,7 +57,6 @@ passport.use(
             passReqToCallback: true,
         },
         async (req: Request, email: string, password: string, done) => {
-            console.log(email, password);
             const usuario = await dao.getByEmail(email);
             if (!usuario) {
                 return done(null, false);
