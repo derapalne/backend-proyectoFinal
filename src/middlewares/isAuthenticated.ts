@@ -27,6 +27,7 @@ export const isAuth = (req: Request, res: Response, next: NextFunction) => {
                     });
                 }
                 req.user = (<any>decoded).data;
+                logger.trace("autenticado!!")
                 next();
             });
         } else {
