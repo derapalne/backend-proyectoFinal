@@ -9,8 +9,8 @@
 <body>
   <div class="bigDiv">
     <h1>Tus órdenes</h1>
-    <a href="/api/productos">Volver a la lista de productos</a> <br/>
-    <a href="/chat">Ir al chat</a> <br/>
+    <a href="/api/productos">Volver a la lista de productos</a> <br />
+    <a href="/chat">Ir al chat</a> <br />
     <table class="centeredTable">
       <% if (ordenes.length == 0) { %>
       <tr>
@@ -18,17 +18,25 @@
       </tr>
       <% } else {%>
       <% for( let o = 0; o < ordenes.length; o++ ) { %>
-        <tr>
-          <td colspan="4">
-            <span>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
-          </td>
-        </tr>
+      <tr>
+        <td colspan="4">
+          <span>~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~</span>
+        </td>
+      </tr>
       <tr>
         <td>
           <p>Orden ID: <%= ordenes[o].ordenId %></p>
         </td>
         <td>
           <p>Estado: <%= ordenes[o].estado %></p>
+          <% if ( ordenes[o].estado == "GENERADA" ) { %>
+          <form>
+            <input type="hidden" name="id" value=<%=ordenes[o].ordenId%> />
+            <input type="hidden" name="estado" value="COMPLETADA" />
+            <input type="button" class="botonCambiarEstado" value="Marcar como completada" />
+          </form>
+          <% } %>
+
         </td>
       </tr>
       <% if(ordenes[o].productos.length == 0) { %>
@@ -62,8 +70,8 @@
         </td>
       </tr>
     </table>
-    <a href="/api/carritos" id="recargar"></a>
-    <script src="/js/carrito.js"></script>
+    <a href="/api/ordenes/" id="recargar"></a>
+    <script src="/js/ordenes.js"></script>
   </div>
 </body>
 

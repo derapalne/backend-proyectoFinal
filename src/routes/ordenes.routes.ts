@@ -7,5 +7,6 @@ const controller = new OrdenesController();
 
 ordenesRouter.get("/", isAuth, controller.getOrdenes);
 ordenesRouter.post("/", isAuth, controller.postOrden);
+ordenesRouter.put("/", isAuth, controller.updateOrden);
 
 export { ordenesRouter };

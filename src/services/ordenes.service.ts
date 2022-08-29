@@ -42,12 +42,11 @@ export class OrdenesService {
         }
     }
 
-    async updateById(id: number, email: string) {
+    async updateEstadoById(id: number, estado: string) {
         try {
-            const carrito = await carritosDao.getByEmail(email);
             const orden = await ordenesDao.getByOrdenId(id);
-            orden.productos = carrito.productos;
-            return await ordenesDao.updateByEmail(id, orden);
+            orden.estado = estado;
+            return await ordenesDao.updateByEmail(orden);
         } catch (e) {
             return e;
         }
