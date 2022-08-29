@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { OrdenesService } from "../services";
 import { sendOrderMail } from "../utils";
+import { logErr } from "../utils";
 
 const service = new OrdenesService();
 
@@ -13,6 +14,7 @@ export class OrdenesController {
             await sendOrderMail(orden);
             res.redirect("/api/ordenes");
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
 
@@ -24,6 +26,7 @@ export class OrdenesController {
             else email = req.cookies.userInfo.user.email;
             res.render("ordenes", {ordenes: await service.getByEmail(email)});
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
 

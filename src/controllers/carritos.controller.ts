@@ -1,14 +1,14 @@
 import { Request, Response } from "express";
 import { CarritosService } from "../services";
+import { logErr } from "../utils";
 
 const service = new CarritosService();
 
 export class CarritosController {
     async getByEmail(req: Request, res: Response) {
         try {
-            console.log(req.cookies.userInfo);
             let email = "";
-            if(req.user) email = req.user.email ;
+            if (req.user) email = req.user.email;
             else email = req.cookies.userInfo.user.email;
             let carrito = await service.getByEmail(email);
             if (!carrito) {
@@ -16,6 +16,7 @@ export class CarritosController {
             }
             res.render("carrito", { carrito: carrito });
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -32,6 +33,7 @@ export class CarritosController {
                 res.redirect("/api/productos");
             }
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -43,6 +45,7 @@ export class CarritosController {
             if (typeof carrito != "string") res.render("carrito", { carrito: carrito });
             else res.json(carrito);
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }

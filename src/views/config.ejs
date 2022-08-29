@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <%- include("partials/header", {title: "Config"}) %> 
+</head>
+<body>
+    <div class="bigDiv">
+        <p>Configuración de entorno</p>
+        <div>
+            <table class="centeredTable">
+                <tr>
+                    <td>
+                        Process ID
+                    </td>
+                    <td>
+                        <%=data.pid%>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Mongo URI
+                    </td>
+                    <td>
+                        <%=data.mongoUri%>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        JWT Secret
+                    </td>
+                    <td>
+                        <%=data.jwtSecret%>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Auth Mode
+                    </td>
+                    <td>
+                        <%=data.authMode%>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Port
+                    </td>
+                    <td>
+                        <%=data.port%>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Admin Mail
+                    </td>
+                    <td>
+                        <%=data.adminMail%>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        Admin Mail Pass
+                    </td>
+                    <td>
+                        <%=data.adminMailPass%>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <a href="/">Volver a la página principal</a>
+    </div>
+</body>
+</html>

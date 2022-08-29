@@ -13,7 +13,7 @@
     <table class="centeredTable">
       <% if(carrito.productos.length == 0) { %>
         <tr>
-          <td>No hay productos todavía! Andá y agregá alguno.</td>
+          <td id="noProductos">No hay productos todavía! Andá y agregá alguno.</td>
         </tr>
       <% } else {  for( let i = 0; i < carrito.productos.length; i++ ) { %>
       <tr>
@@ -48,7 +48,7 @@
     </table>
     <form action="/api/ordenes" method="post" class="centeredTable">
       <input type="hidden" name="email" value=<%=carrito.email%> />
-      <input type="submit" value="Hacer compra">
+      <input type="submit" id="hacerCompra" value="Hacer compra">
     </form>
     <a href="/api/carritos" id="recargar"></a>
     <script src="/js/carrito.js"></script>

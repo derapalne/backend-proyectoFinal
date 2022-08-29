@@ -8,7 +8,9 @@ const controller = new MainController();
 
 const mainRouter = Router();
 
+// Principal
 mainRouter.get("/", isAuth, controller.getMain);
+// Registro
 mainRouter.get("/register", controller.getRegister);
 mainRouter.get("/register-error", controller.getRegisterError);
 mainRouter.post(
@@ -19,7 +21,7 @@ mainRouter.post(
         passReqToCallback: true,
     })
 );
-
+// Logueo
 mainRouter.get("/login", controller.getLogin);
 mainRouter.get("/login-error", controller.getLoginError);
 mainRouter.post(
@@ -30,9 +32,11 @@ mainRouter.post(
     }),
     controller.postLogin
 );
-mainRouter.post("/logout",isAuth, controller.postLogout)
-
+// Deslogueo
+mainRouter.post("/logout", isAuth, controller.postLogout);
+// Chat
 mainRouter.get("/chat/:email?", isAuth, controller.getChat);
-
+// Configuración
+mainRouter.get("/config", isAuth, controller.getConfig);
 
 export { mainRouter };

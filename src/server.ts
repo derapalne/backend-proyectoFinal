@@ -12,6 +12,7 @@ import cors from "cors";
 import { productosRouter, carritosRouter, mainRouter, ordenesRouter } from "./routes";
 import { MensajesService } from "./services";
 import { corsOptions, config } from "./utils";
+import { logRoutes } from "./middlewares";
 
 const PORT = config.port;
 
@@ -40,7 +41,7 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-
+app.use(logRoutes)
 app.use(compression());
 app.use(express.static(path.join(__dirname + "/public")));
 app.set("views", path.join(__dirname + "/views/"));

@@ -47,7 +47,7 @@ export class OrdenesService {
             const carrito = await carritosDao.getByEmail(email);
             const orden = await ordenesDao.getByOrdenId(id);
             orden.productos = carrito.productos;
-            return await ordenesDao.updateById(id, orden);
+            return await ordenesDao.updateByEmail(id, orden);
         } catch (e) {
             return e;
         }

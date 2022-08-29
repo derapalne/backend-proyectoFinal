@@ -3,7 +3,7 @@ import { MensajesService, UsuariosService } from "../services";
 import { comparePassword } from "../middlewares/authLocal";
 import jwt from "jsonwebtoken";
 import { UsuarioDto } from "../dtos";
-import { config } from "../utils";
+import { config, logErr } from "../utils";
 
 const service = new UsuariosService();
 const mensajesService = new MensajesService();
@@ -23,6 +23,7 @@ export class MainController {
         try {
             res.redirect("/api/productos");
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -31,6 +32,7 @@ export class MainController {
         try {
             res.render("register", { msg: "" });
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -39,6 +41,7 @@ export class MainController {
         try {
             res.render("register", { msg: "No se ha podido registrar al usuario." });
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -53,6 +56,7 @@ export class MainController {
                 res.redirect("/login");
             }
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -61,6 +65,7 @@ export class MainController {
         try {
             res.render("login", { msg: "" });
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -69,6 +74,7 @@ export class MainController {
         try {
             res.render("login", { msg: "Error de credenciales!" });
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -88,11 +94,21 @@ export class MainController {
                 );
                 if (coincide) {
                     const token = createToken(usuarioExistente);
-                    res.cookie("userInfo", { user: usuarioExistente, token: token });
+                    res.cookie("userInfo", {
+                        user: {
+                            nombre: usuarioExistente.nombre,
+                            apellido: usuarioExistente.apellido,
+                            direccion: usuarioExistente.direccion,
+                            telefono: usuarioExistente.telefono,
+                            email: usuarioExistente.email,
+                        },
+                        token: token,
+                    });
                     res.status(200).redirect("/");
                 }
             }
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -105,6 +121,7 @@ export class MainController {
             req.cookies.userInfo = null;
             res.render("logout");
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -125,6 +142,24 @@ export class MainController {
                     email: email,
                 });
         } catch (e) {
+            logErr.error(e);
+            res.status(500).render("error", { error: e });
+        }
+    }
+
+    async getConfig(req: Request, res: Response) {
+        try {
+            res.render("config", {data: {
+                pid: process.pid,
+                mongoUri: config.mongoUri,
+                jwtSecret: config.secret,
+                authMode: config.AUTH_MODE,
+                port: config.port,
+                adminMail: config.ADMIN_MAIL,
+                adminMailPass: config.ADMIN_MAIL_PASS
+            }});
+        } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }

@@ -1,5 +1,6 @@
 import { Request, Response } from "express";
 import { ProductosService } from "../services";
+import { logErr } from "../utils";
 
 const service = new ProductosService();
 
@@ -10,6 +11,7 @@ export class ProductosController {
             const productos = await service.getAll();
             res.render("productosList", { productos: productos, user: user, categoria: false });
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -28,6 +30,7 @@ export class ProductosController {
                 categoria: req.params.id,
             });
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -36,6 +39,7 @@ export class ProductosController {
             const data = req.body.producto;
             res.json(await service.add(data));
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -45,6 +49,7 @@ export class ProductosController {
             const data = req.body.producto;
             res.json(await service.updateById(id, data));
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
@@ -53,6 +58,7 @@ export class ProductosController {
             const id = req.params.id;
             res.json(await service.deleteById(id));
         } catch (e) {
+            logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }

@@ -52,11 +52,11 @@ export class OrdenesDao {
         }
     }
 
-    async updateById(id: number, ordenDto: OrdenDto) {
+    async updateByEmail(ordenDto: OrdenDto) {
         try {
             return await OrdenModel.findOneAndUpdate(
-                { email: email },
-                { $set: { productos: ordenDto.productos } }
+                { email: ordenDto.email },
+                { $set: { productos: ordenDto.productos, estado: ordenDto.estado } }
             );
         } catch (e) {
             return e;
