@@ -9,7 +9,7 @@
 <body>
   <div class="bigDiv">
     <h1>Tu carrito</h1>
-    <a href="/api/productos">Volver a la lista de productos</a>
+    <a href="/productos">Volver a la lista de productos</a>
     <table class="centeredTable">
       <% if(carrito.productos.length == 0) { %>
         <tr>
@@ -50,7 +50,7 @@
       <input type="hidden" name="email" value=<%=carrito.email%> />
       <input type="submit" id="hacerCompra" value="Hacer compra">
     </form>
-    <a href="/api/carritos" id="recargar"></a>
+    <a href="/carritos" id="recargar"></a>
     <script src="/js/carrito.js"></script>
   </div>
 </body>

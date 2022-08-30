@@ -1,13 +1,17 @@
 import { Router } from "express";
 import { CarritosController } from "../controllers";
-import { isAuth } from "../middlewares";
+import { isAdmin, isAuth } from "../middlewares";
 
 const carritosRouter = Router();
+const carritosApiRouter = Router();
 const controller = new CarritosController();
 
-carritosRouter.get("/", isAuth, controller.getByEmail); // listar productos
-carritosRouter.post("/", isAuth, controller.postProducto); // agregar productos
-carritosRouter.put("/:id", isAuth, controller.postProducto); // modificar producto por id
-carritosRouter.delete("/:id", controller.removeProducto); // eliminar productos
+// Vistas
+carritosRouter.get("/", isAuth, controller.getByEmailView); // listar productos
+// Api
+carritosApiRouter.get("/", isAuth, controller.getByEmailApi); // listar productos
+carritosApiRouter.post("/", isAdmin, controller.postProducto); // agregar productos
+carritosApiRouter.put("/:id", isAdmin, controller.postProducto); // modificar producto por id
+carritosApiRouter.delete(":id", isAdmin, controller.removeProducto); // eliminar productos
 
-export { carritosRouter };
+export { carritosRouter, carritosApiRouter };

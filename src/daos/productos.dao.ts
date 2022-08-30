@@ -39,9 +39,9 @@ export class ProductosDao {
         try {
             // Buscar todas las IDs de productos, ordenar por ID descendente y traer solamente el primero
             const largestId = await ProductoModel.find({},{_id : 0, id: 1}).sort({id: -1}).limit(1);
-            // Si el ID es mayor o igual a 0 (es decir, no es el primer producto agregado), 
+            // Si el ID es mayor a 0 (es decir, no es el primer producto agregado), 
             // sumar 1 al ID anterior.
-            if(largestId[0].id >= 0) producto.id = largestId[0].id+ 1;
+            if(largestId[0].id > 0) producto.id = largestId[0].id+ 1;
             // Si no, que el producto sea el primero.
             else producto.id = 0;
             const data = new ProductoModel(producto);

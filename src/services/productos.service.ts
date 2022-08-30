@@ -2,7 +2,7 @@ import { ProductosDao } from "../daos";
 import { ProductoDto } from "../dtos";
 import { config } from "../utils";
 
-const dao = new ProductosDao(config.mongoUri);
+const dao = new ProductosDao(config.MONGO_URI);
 
 export class ProductosService {
     async getById(id: string) {

@@ -1,12 +1,16 @@
 import { Router } from "express";
 import { OrdenesController } from "../controllers";
-import { isAuth } from "../middlewares";
+import { isAdmin, isAuth } from "../middlewares";
 
 const ordenesRouter = Router();
+const ordenesApiRouter = Router();
 const controller = new OrdenesController();
 
-ordenesRouter.get("/", isAuth, controller.getOrdenes);
-ordenesRouter.post("/", isAuth, controller.postOrden);
-ordenesRouter.put("/", isAuth, controller.updateOrden);
+// Vista
+ordenesRouter.get("/", isAuth, controller.getOrdenesView);
+// Api
+ordenesApiRouter.get("/", isAuth, controller.getOrdenesApi);
+ordenesApiRouter.post("/", isAuth, controller.postOrden);
+ordenesApiRouter.put("/", isAdmin, controller.updateOrden);
 
-export { ordenesRouter };
+export { ordenesRouter, ordenesApiRouter };

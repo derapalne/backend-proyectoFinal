@@ -20,14 +20,13 @@ export const isAuth = (req: Request, res: Response, next: NextFunction) => {
             }
             const token = userInfo.token;
 
-            jwt.verify(token, config.secret, (err, decoded) => {
+            jwt.verify(token, config.SECRET, (err, decoded) => {
                 if (err) {
                     return res.status(403).render("login", {
                         msg: "No autorizado! Por favor logueate para continuar",
                     });
                 }
                 req.user = (<any>decoded).data;
-                logger.trace("autenticado!!")
                 next();
             });
         } else {

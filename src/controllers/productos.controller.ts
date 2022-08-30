@@ -5,17 +5,31 @@ import { logErr } from "../utils";
 const service = new ProductosService();
 
 export class ProductosController {
-    async getAll(req: Request, res: Response) {
+    async getAllView(req: Request, res: Response) {
         try {
             const user = req.user || req.cookies.userInfo.user;
             const productos = await service.getAll();
-            res.render("productosList", { productos: productos, user: user, categoria: false });
+            res.status(200).render("productosList", {
+                productos: productos,
+                user: user,
+                categoria: false,
+            });
         } catch (e) {
             logErr.error(e);
             res.status(500).render("error", { error: e });
         }
     }
-    async getById(req: Request, res: Response) {
+    async getAllApi(req: Request, res: Response) {
+        try {
+            const user = req.user || req.cookies.userInfo.user;
+            const productos = await service.getAll();
+            res.status(200).json({ productos: productos, user: user, categoria: false });
+        } catch (e) {
+            logErr.error(e);
+            res.status(500).json({ error: e });
+        }
+    }
+    async getByIdView(req: Request, res: Response) {
         try {
             const id = req.params.id;
             let respuesta = [];
@@ -34,6 +48,26 @@ export class ProductosController {
             res.status(500).render("error", { error: e });
         }
     }
+    async getByIdApi(req: Request, res: Response) {
+        try {
+            const id = req.params.id;
+            let respuesta = [];
+            if (isNaN(Number(id))) {
+                respuesta = await service.getByCategory(id);
+            } else {
+                respuesta[0] = await service.getById(id);
+            }
+            res.status(200).json({
+                productos: respuesta,
+                user: req.user || req.cookies.userInfo.user,
+                categoria: req.params.id,
+            });
+        } catch (e) {
+            logErr.error(e);
+            res.status(500).json({ error: e });
+        }
+    }
+
     async add(req: Request, res: Response) {
         try {
             const data = req.body.producto;

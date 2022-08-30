@@ -2,7 +2,7 @@ import { UsuariosDao } from "../daos";
 import { UsuarioDto } from "../dtos";
 import { config } from "../utils";
 
-const dao = new UsuariosDao(config.mongoUri);
+const dao = new UsuariosDao(config.MONGO_URI);
 
 export class UsuariosService {
     async getByEmail(email: string): Promise<UsuarioDto | null> {

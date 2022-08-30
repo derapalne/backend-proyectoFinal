@@ -11,7 +11,7 @@ const mensajesService = new MensajesService();
 const createToken = (usuario: UsuarioDto) => {
     return jwt.sign(
         { nombreCompleto: usuario.nombreCompleto, email: usuario.email },
-        config.secret,
+        config.SECRET,
         {
             expiresIn: 600,
         }
@@ -21,7 +21,7 @@ const createToken = (usuario: UsuarioDto) => {
 export class MainController {
     async getMain(req: Request, res: Response) {
         try {
-            res.redirect("/api/productos");
+            res.redirect("/productos");
         } catch (e) {
             logErr.error(e);
             res.status(500).render("error", { error: e });
@@ -151,10 +151,10 @@ export class MainController {
         try {
             res.render("config", {data: {
                 pid: process.pid,
-                mongoUri: config.mongoUri,
-                jwtSecret: config.secret,
+                mongoUri: config.MONGO_URI,
+                jwtSecret: config.SECRET,
                 authMode: config.AUTH_MODE,
-                port: config.port,
+                port: config.PORT,
                 adminMail: config.ADMIN_MAIL,
                 adminMailPass: config.ADMIN_MAIL_PASS
             }});

@@ -1,8 +1,6 @@
 const cambiarEstado = document.getElementsByClassName("botonCambiarEstado");
 const recargar = document.getElementById("recargar");
 
-
-
 const url = "http://127.0.0.1:7777/api/ordenes/";
 
 for (let i = 0; i < cambiarEstado.length; i++) {
@@ -16,10 +14,10 @@ for (let i = 0; i < cambiarEstado.length; i++) {
             body: JSON.stringify({ estado: estado.value, id: id.value }),
             headers: {
                 "Content-Type": "application/json",
+                "Access-Control-Allow-Credentials": "true",
             },
         }).then((res) => {
-            // recargar.click();
-            console.log(res)
+            recargar.click();
         });
     });
 }

@@ -2,7 +2,7 @@ import { MensajesDao } from "../daos";
 import { MensajeDto } from "../dtos";
 import { config } from "../utils";
 
-const dao = new MensajesDao(config.mongoUri);
+const dao = new MensajesDao(config.MONGO_URI);
 
 export class MensajesService {
     async getAll() {

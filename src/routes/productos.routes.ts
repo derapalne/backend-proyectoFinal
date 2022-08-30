@@ -1,19 +1,25 @@
 import { Router } from "express";
 import { ProductosController } from "../controllers";
-import { isAuth } from "../middlewares";
+import { isAdmin, isAuth } from "../middlewares";
 
 const productosRouter = Router();
+const productosApiRouter = Router();
 const controller = new ProductosController();
 
-// GET ALL
-productosRouter.get("/", isAuth, controller.getAll);
-// GET BY ID O CATEGORIA
-productosRouter.get("/:id", isAuth, controller.getById);
-// POST PROD
-productosRouter.post("/", isAuth, controller.add);
-// PUT PROD BY ID
-productosRouter.put("/:id", isAuth, controller.updateById);
-// DELETE BY ID
-productosRouter.delete("/:id", isAuth, controller.deleteById);
+// Vistas
+//GET
+productosRouter.get("/", isAuth, controller.getAllView);
+productosRouter.get("/:id", isAuth, controller.getByIdView);
 
-export { productosRouter };
+// Api
+// GET
+productosApiRouter.get("/", isAuth, controller.getAllApi);
+productosApiRouter.get("/:id", isAuth, controller.getByIdApi);
+// POST PROD
+productosApiRouter.post("/", isAdmin, controller.add);
+// PUT PROD BY ID
+productosApiRouter.put("/:id", isAdmin, controller.updateById);
+// DELETE BY ID
+productosApiRouter.delete("/:id", isAdmin, controller.deleteById);
+
+export { productosRouter, productosApiRouter };

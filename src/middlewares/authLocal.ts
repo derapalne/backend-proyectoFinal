@@ -6,7 +6,7 @@ import { config } from "../utils";
 import { Request } from "express";
 import { UsuarioDto } from "../dtos";
 
-const dao = new UsuariosDao(config.mongoUri);
+const dao = new UsuariosDao(config.MONGO_URI);
 
 passport.serializeUser((usuario, done) => {
     done(null, usuario);

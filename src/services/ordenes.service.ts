@@ -1,10 +1,10 @@
 import { PreMiddlewareFunction } from "mongoose";
 import { OrdenesDao, CarritosDao } from "../daos";
 import { CarritoDto, OrdenDto, ProductoDto } from "../dtos";
-import { config } from "../utils";
+import { config, logger } from "../utils";
 
-const carritosDao = new CarritosDao(config.mongoUri);
-const ordenesDao = new OrdenesDao(config.mongoUri);
+const carritosDao = new CarritosDao(config.MONGO_URI);
+const ordenesDao = new OrdenesDao(config.MONGO_URI);
 
 export class OrdenesService {
     async add(email: string): Promise<OrdenDto | undefined> {
@@ -46,7 +46,7 @@ export class OrdenesService {
         try {
             const orden = await ordenesDao.getByOrdenId(id);
             orden.estado = estado;
-            return await ordenesDao.updateByEmail(orden);
+            return await ordenesDao.updateById(orden);
         } catch (e) {
             return e;
         }
