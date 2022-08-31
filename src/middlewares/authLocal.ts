@@ -2,7 +2,7 @@ import passport from "passport";
 import { Strategy as LocalStrategy } from "passport-local";
 import bcrypt from "bcrypt";
 import { UsuariosDao } from "../daos";
-import { config } from "../utils";
+import { config, sendRegisterMail } from "../utils";
 import { Request } from "express";
 import { UsuarioDto } from "../dtos";
 
@@ -41,8 +41,7 @@ passport.use(
             usuarioData.password = await bcrypt.hash(password, 10);
             const usuarioDto = new UsuarioDto(usuarioData);
             const usuario = await dao.add(usuarioDto);
-            // ENVIAR MAIL DE CONFIRMACION
-            console.log({usuario});
+            sendRegisterMail(usuario);
             return done(null, usuario);
         }
     )

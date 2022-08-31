@@ -11,6 +11,6 @@ carritosRouter.get("/", isAuth, controller.getByEmailView); // listar productos
 // Api
 carritosApiRouter.get("/", isAuth, controller.getByEmailApi); // listar productos
 carritosApiRouter.post("/", isAdmin, controller.postProducto); // agregar productos
-carritosApiRouter.delete(":id", isAdmin, controller.removeProducto); // eliminar productos
+carritosApiRouter.delete("/:id", isAdmin, controller.removeProducto); // eliminar productos
 
 export { carritosRouter, carritosApiRouter };
